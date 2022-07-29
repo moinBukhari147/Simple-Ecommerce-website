@@ -1,0 +1,90 @@
+{% extends 'shop/basic.html' %}
+{%block title%}Contact Us{% endblock %}
+{%block css%}
+<style>
+
+      {% load static %}
+      body
+      {
+        background-image: url("{%static 'shop/background1.webp'%}");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        filter: brightness(100%);
+      }
+      .container
+      {
+        position: relative;
+        left: -50px;
+      }
+    
+    .form_custom_styling
+    {
+        background-color: rgba(26, 21, 21, 0.09);
+        border-radius: 5px;
+        box-shadow: 15px 0 8px -10px rgb(25,135,84,0.8),20px 0 20px -14px rgb(25,135,84,0.7);
+        transition: 0.4s;
+    }
+    .form_custom_styling:hover
+    {
+        background-color: rgba(26, 21, 21, 0.4);
+        border-radius: 5px;
+        box-shadow: 10px 0 8px -4px rgb(25,135,84,0.8),15px 0 20px -4px rgb(25,135,84,0.7);
+        
+    }
+    .form-label
+    {
+      color: rgb(231, 227, 227);
+    }
+    .dark{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      background-color: rgba(8, 8, 8, 0.671);
+    }
+  </style>
+  {%endblock%}
+{% block body%}
+<div class="dark">
+  <div class="container my-3 ">
+      <div class="col-xl-4 col-lg-5 col-md-6 col-sm-9 col-10 ms-md-0 ms-auto  form_custom_styling">
+          <h2 class="pt-3 mt-2 ps-4" style="color: rgb(231, 227, 227);" >  Contact Us  </h2>
+          <div class="px-4 mt-3" >
+              <form action="/shop/contact/" method="post">{% csrf_token %}
+                  <div class="">
+                  <label for="full_name" class="form-label">Full Name</label>
+                  <input type="text" class="form-control" id="full_name" required aria-describedby="person_name" name="full_name" placeholder="Your good name...">
+                  <div id="person_name" class="form-text">Please enter you name so we can recognize you.</div>
+                </div>
+                  <div class="">
+                  <label for="exampleInputEmail1" class="form-label">Email address</label>
+                  <input type="email" class="form-control" id="exampleInputEmail1" required name="email" aria-describedby="emailHelp" placeholder="Your contact email">
+                  <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="">
+                  <label for="contact_num" class="form-label">Contact No</label>
+                  <input type="tel" class="form-control" pattern="[0-9]{4}-[0-9]{7}" required name="contact" id="contact_num" aria-describedby="phone_num" placeholder="0300-1234567">
+                  <div id="phone_num" class="form-text">This make easier to solve your quries</div>
+                </div>
+                <div class="mb-2">
+                  <label for="help_query" class="form-label">How we may help</label>
+                  <textarea class="form-control" rows="4" id="help_query" name="query" required placeholder="How we can help"></textarea>
+                </div>
+
+                <button type="submit" class="btn mb-3 btn-success">Submit</button>
+              </form>
+          </div>
+      
+    </div>
+  </div>
+</div>
+{%endblock%}
+{%block js%}
+<script>
+  document.querySelector('.contact').classList.add('active')
+  {%if message%}
+    alert('We have received your message. We will reach you as soon as possible.');
+  {%endif%}
+</script>
+{%endblock%}

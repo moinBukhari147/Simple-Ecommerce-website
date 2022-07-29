@@ -1,0 +1,128 @@
+{% extends 'shop/basic.html' %}
+{%block title%}Order Tracker{% endblock %}
+{%block body%}
+<div class="container mt-2">
+    
+    <div class="row my-4">
+        <h3>Track your order by order ID</h3>
+        <form id="trackerForm" class="row g-3" method="post" action="/shop/tracking/">{%csrf_token%}
+            
+            <div class="col-md-4">
+                <label for="validationDefaultUsername" class="form-label">Order Id</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="inputGroupPrepend2">ID</span>
+                    <input
+                        type="text"
+                        name="trackerId"
+                        class="form-control"
+                        id="validationDefaultUsername"
+                        aria-describedby="inputGroupPrepend2"
+                        required
+                        placeholder="123.."
+                    />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="validationDefaultUsername" class="form-label">Username</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="inputGroupPrepend2">@</span>
+                    <input
+                        type="email"
+                        name="email"
+                        class="form-control"
+                        id="validationDefaultUsername"
+                        aria-describedby="inputGroupPrepend2"
+                        required
+                        placeholder="xyz@gmail.com"
+                    />
+                </div>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">Track Order</button>
+            </div>
+        </form>
+    </div>
+    <div class="row my-5">
+        <h4>Order Tracking updates</h4>
+        <div>
+            <ul class="list-group" id="item">
+                Enter Order Id and email above to track your order.
+                
+            </ul>
+        </div>
+    </div>
+    <div class="row my-5">
+        <h4>Order Details</h4>
+        <div>
+            <ul class="list-group" id="itemDetail">
+                Enter Your Order Id and email to check order details
+            </ul>
+        </div>
+    </div>
+</div>
+{%endblock%}
+{%block js%}
+    <script>
+    document.querySelector('.orderTracking').classList.add('active')
+        $('#trackerForm').submit(function(event){
+            $('#item').empty;
+            $('#itemDetail').empty;
+            var formData = { 
+                'trackerId' : $('input[name=trackerId]').val(),
+                'email' : $('input[name=email]').val(),
+                'csrfmiddlewaretoken' : $('input[name=csrfmiddlewaretoken]').val()
+            };
+            $.ajax({
+                type : 'POST',
+                url: '/shop/tracking/',
+                data: formData,
+                encode: true
+            })
+
+            .done(function(data){
+                $('#item').empty();
+                $('#itemDetail').empty();
+                updates = JSON.parse(data);
+                if (updates){
+                    
+                    for (var item of updates[0])
+                    {
+                        
+                        let updateDesc = item['text'];
+                        let updateTime = item['time'].slice(0,19);
+                        mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                    ${updateDesc}
+                                    <span class="badge bg-primary rounded-pill">${updateTime}</span>
+                        </li>`
+                        $('#item').append(mystr);
+                    }
+                    productsDetails = JSON.parse([updates[1]]);
+                    for (var item in productsDetails)
+                    {
+                        let name = productsDetails[item][1];
+                        let qty = productsDetails[item][0];
+                        mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                    ${name}
+                                    <span class="badge bg-primary rounded-pill">${qty}</span>
+                                </li>`
+                        $('#itemDetail').append(mystr);
+                    }
+                }
+                else{
+                    mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+                            Tracking ID or Email is incorrect.
+                                <span class="badge bg-primary rounded-pill">No Update</span>
+                            </li>`
+                    $('#item').append(mystr);
+                    mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+                            Tracking ID or Email is incorrect.
+                                <span class="badge bg-primary rounded-pill">No Details</span>
+                            </li>`
+                    $('#itemDetail').append(mystr);
+                }
+            });
+            event.preventDefault();
+        });
+        
+    </script>
+{%endblock%}

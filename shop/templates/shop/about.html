@@ -1,0 +1,141 @@
+{% extends 'shop/basic.html' %} {%block title%}Contact Us{% endblock %} {% load static %} {%block css%}
+
+<style>
+    body
+    {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 91.5vh;
+        background-image: url('{% static "shop/background3.webp"%}');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        
+    }
+    .dark {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(10, 10, 4, 0.89);
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        position: relative;
+    }
+    .centre {
+        
+        display: flex;
+        flex-direction: column;
+        /* background-color: rgba(31, 29, 12, 0.4); */
+        
+        /* box-shadow: -1px 2px 17px 1px rgba(10, 175, 98, 0.699); */
+        transition: all 0.4s;
+        /* border: 0.5px solid rgba(10, 175, 98,1); */
+    }
+    .centre:hover {
+        box-shadow: 0 -10px 17px -7px rgba(253, 238, 31, 0.699);
+    }
+    .logo {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        width: 100%;
+        margin-top: 10px;
+        flex: 1;
+    }
+    .logo .logo-text {
+        font-size: 70px;
+        font-family: "Knewave", cursive;
+        color: white;
+    }
+    .about-section
+    {
+        flex: 2;
+    }
+    .about-text
+    {
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        color: rgba(211, 211, 210, 0.582);
+        font-size: 12px;
+        text-align: center;
+        text-transform: uppercase;
+        word-spacing: 1px;
+        font-weight: 300;
+    }
+    .btnsetting {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        width: 100%;
+        flex: 1;
+        margin-bottom: 10px;
+    }
+    .outline {
+        background-color: none !important;
+        border: 2px solid white;
+        color: white;
+    }
+    .outline:hover {
+        color: white;
+    }
+    .copyrights {
+        position: absolute;
+        width: 100%;
+        bottom: 0px;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .text {
+        font-size: 10px;
+        color: white;
+        font-family: serif;
+        letter-spacing: 1px;
+    }
+    .about-text span
+    {
+        display: inline-block;
+    }
+</style>
+
+{%endblock%} {%block body%}
+
+<div class="main">
+    <div class="dark">
+        <div class="container">
+            <div class="col-lg-5 col-md-7 col-10 mt-4 ms-md-0 mx-auto centre">
+                <div class="logo ">
+                    <span class="logo-text">Sil\!\PLE</span>
+                </div>
+                <div class="about-section mt-5 mb-5">
+                    <p class="about-text">
+                        <span>This is my first ever project that I have fully created.</span><br><span class="mt-3">Simple is not 
+                        just about selling, it's about style.<br>Style is the way to say who you are whitout having to
+                        speak. <br> And in return we buy 'Trust'.</span>
+                    </p>
+                </div>
+                <div class="btnsetting mt-5">
+                    <a href="/shop/" class="btn col-5 btn-success me-2">Shop</a>
+                    <a href="/blog/" class="btn col-5 outline ms-2">Blog</a>
+                </div>
+            </div>
+        </div>
+        <div class="copyrights">
+            <p class="text">This website is designed by Muhammad Moin Bukhari.</p>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %} {%block js%}
+<script>
+    document.querySelector(".about").classList.add("active");
+</script>
+{%endblock%}

@@ -1,0 +1,64 @@
+{% extends 'blog/basic.html' %} {%block title%}BLOG{% endblock %}
+{%block css%}
+    <style>
+        .image
+        {
+            object-fit: cover;
+        }
+    </style>
+{% endblock %}
+{%block body%}
+<div class="container mt-3">
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-primary">Featured post</strong>
+                    <h4 class="mb-0">{{titles.0.post_title}}</h4>
+                    <div class="mt-1 mb-1 text-muted">{{post_dates.0.post_dateTime}}</div>
+                    <p class="card-text mb-auto">
+                        {{post_contents1.0.post_content1|slice:":40"}}
+                    </p>
+                    <a href="/blog/blogpost/{{post_id.0.post_id}}/" class="stretched-link">Continue reading</a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <img class="image" src="/media/{{thumbnails.0.post_thumbnail}}" width="200" height="250" alt="Mens outfit">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-success">Featured post</strong>
+                    <h4 class="mb-0">{{titles.1.post_title}}</h4>
+                    <div class="mb-1 text-muted">{{post_dates.0.post_dateTime}}</div>
+                    <p class="mb-auto">{{post_contents1.1.post_content1|slice:":40"}}</p>
+                    <a href="/blog/blogpost/{{post_id.1.post_id}}/" class="stretched-link">Continue reading</a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <img class="image" src="/media/{{thumbnails.1.post_thumbnail}}" width="200" height="250" alt="Mens outfit">
+                </div>
+            </div>
+        </div>
+        {%for i in range%}
+        <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-success">New Post</strong>
+                    <h4 class="mb-0">{{titles.i.post_title}}</h4>
+                    <div class="mb-1 text-muted">{{post_dates.i.post_dateTime}}</div>
+                    <p class="mb-auto">{{post_contents1.i.post_content1|slice:":40"}}</p>
+                    <a href="/blog/blogpost/{{post_id.i.post_id}}/" class="stretched-link">Continue reading</a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <img class="image" src="/media/{{thumbnails.i.post_thumbnail}}" width="200" height="250" alt="Mens outfit">
+                </div>
+            </div>
+        </div>
+        {%endfor%}
+    </div>
+</div>
+
+<!-- second contaner -->
+
+{%endblock%}

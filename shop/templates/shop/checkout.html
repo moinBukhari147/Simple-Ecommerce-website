@@ -1,0 +1,119 @@
+{% extends 'shop/basic.html' %} {%block title%}checkout{% endblock %}
+{%block css%}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<style>
+    body
+      {
+        background-color: #D9DBDD;
+      }
+</style>
+{%endblock%}
+{% block body%}
+<div class="container mt-2">
+    <div class="row my-4">
+        <h3>Express checkout - Review your checkout items</h3>
+        <div>
+            <ul class="list-group" id="item">
+                
+                Cart is empty plase fill your cart with the products.
+                
+            </ul>
+        </div>
+    </div>
+    <div class="row my-4">
+        <h3>Enter address and other details</h3>
+        <div id="items" class="col-8">
+            <form class="row g-3" method="post" action="/shop/checkout/">{%csrf_token%}
+                <input type="hidden" name="itemJson" id="itemJson">
+                <div class="col-md-4">
+                    <label for="validationDefault01" class="form-label">First name</label>
+                    <input type="text" class="form-control" id="validationDefault01" name="fname" required placeholder="Moin.." />
+                </div>
+                <div class="col-md-4">
+                    <label for="validationDefault02" class="form-label">Last name</label>
+                    <input type="text" class="form-control" id="validationDefault02" name="lname" required placeholder="Bukhari..." />
+                </div>
+                <div class="col-md-4">
+                    <label for="validationDefaultUsername" class="form-label">Username</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="inputGroupPrepend2">@</span>
+                        <input
+                            type="email"
+                            name="email"
+                            class="form-control"
+                            id="validationDefaultUsername"
+                            aria-describedby="inputGroupPrepend2"
+                            required
+                            placeholder="xyz@gmail.com"
+                        />
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="validationDefault02" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="validationDefault02" name="address" required placeholder="House # ..." />
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mt-2">
+                        <label for="validationDefault02" class="form-label">Phone No</label>
+                        <input type="tel" class="form-control" id="validationDefault02" name="phone" required placeholder="0300-1234567" pattern="[0-9]{4}-[0-9]{7}" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="validationDefault03" class="form-label">City</label>
+                    <input type="text" class="form-control" id="validationDefault03" name="city" required placeholder="Rawalpindi..."/>
+                </div>
+                
+                <div class="col-md-3">
+                    <label for="validationDefault04" class="form-label">State</label>
+                    <select class="form-select" id="validationDefault04" name="state" required>
+                        <option selected disabled value="">Choose...</option>
+                        <option>Islamabad</option>
+                        <option>Punjab</option>
+                        <option>Sindh</option>
+                        <option>Blocchistan</option>
+                        <option>KPK</option>
+                        <option>FATA</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="validationDefault05" class="form-label">Zip</label>
+                    <input type="text" class="form-control" id="validationDefault05" name="zip" required />
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-primary type="submit">Place Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{%endblock%}
+{%block js%}
+<script>
+    
+    document.querySelector('.checkOut').classList.add('active')
+    {% if not thanks %}
+    cart = JSON.parse(localStorage.getItem('cart'));
+    if ((Object.keys(cart).length) != 0)
+    {
+        document.getElementById('item').innerHTML = "";
+    }
+    
+    for (var item in cart)
+    {
+        let name = cart[item][1];
+        let qty = cart[item][0];
+        mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+                    ${name}
+                    <span class="badge bg-primary rounded-pill">${qty}</span>
+        </li>`
+        $('#item').append(mystr);
+    }
+    $('#itemJson').val(JSON.stringify(cart));
+    {%endif%}
+    {% if thanks %}
+        alert('Thanks for shoping from Moin Store. YOur tracking order id is {{checkout_track_id}}')
+        localStorage.clear();
+        document.location = '/shop/';
+    {%endif%}
+</script>
+{%endblock%}
